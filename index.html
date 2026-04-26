@@ -132,18 +132,8 @@
     </div>
 
     <div class="info-section">
-        <div class="ad-container">
-            <script type="text/javascript">
-                atOptions = {
-                    'key' : '5069ad86b9e8e9fde3e56a361568f7fd',
-                    'format' : 'iframe',
-                    'height' : 50,
-                    'width' : 320,
-                    'params' : {}
-                };
-            </script>
-            <script type="text/javascript" src="https://www.highperformanceformat.com/5069ad86b9e8e9fde3e56a361568f7fd/invoke.js"></script>
-        </div>
+        <div class="ad-container" id="ad-refresh-container">
+            </div>
 
         <div class="instructions">
             <h3>Como usar o Gerador de Ofertas?</h3>
@@ -167,6 +157,36 @@
     </footer>
 
     <script>
+        /* FUNÇÃO PARA ATUALIZAR O ANÚNCIO A CADA 30 SEGUNDOS */
+        function carregarAnuncio() {
+            const container = document.getElementById('ad-refresh-container');
+            container.innerHTML = '';
+
+            var atOptions = {
+                'key' : '5069ad86b9e8e9fde3e56a361568f7fd',
+                'format' : 'iframe',
+                'height' : 50,
+                'width' : 320,
+                'params' : {}
+            };
+
+            var optionsScript = document.createElement('script');
+            optionsScript.type = 'text/javascript';
+            optionsScript.text = "atOptions = " + JSON.stringify(atOptions);
+            
+            var invokeScript = document.createElement('script');
+            invokeScript.type = 'text/javascript';
+            invokeScript.src = "https://www.highperformanceformat.com/5069ad86b9e8e9fde3e56a361568f7fd/invoke.js";
+
+            container.appendChild(optionsScript);
+            container.appendChild(invokeScript);
+        }
+
+        // Inicia o primeiro anúncio e define o intervalo de 30 segundos
+        carregarAnuncio();
+        setInterval(carregarAnuncio, 30000);
+
+        /* FUNÇÕES ORIGINAIS DO GERADOR */
         function atualizar() {
             const img = document.getElementById('imgUrl').value;
             const nome = document.getElementById('nome').value;
@@ -177,11 +197,9 @@
             const btnFake = document.getElementById('btnFake');
             const card = document.getElementById('cardParaFoto');
 
-            // Atualiza Foto e Texto
             if(img) pImg.src = img;
             pNome.innerText = nome || "Título do Produto";
 
-            // Lógica de Cores e Texto da Loja
             if (loja === "shopee") {
                 card.style.borderColor = "#ee4d2d";
                 btnFake.style.backgroundColor = "#ee4d2d";
