@@ -3,12 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gerador de Ofertas para Grupos - Achados Tech</title>
+    <title>Gerador de Ofertas Profissional | Achados Tech</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <style>
         body { 
-            font-family: 'Inter', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; 
-            /* Gradiente moderno que passa autoridade e limpeza */
+            font-family: 'Inter', sans-serif; 
             background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); 
             display: flex; 
             flex-direction: column; 
@@ -16,76 +15,83 @@
             min-height: 100vh; 
             margin: 0; 
             padding: 40px 20px; 
-            color: #2d3436; 
+            padding-bottom: 180px; /* Espaço para os anúncios fixos */
         }
 
         .main-container { 
-            max-width: 1000px; /* Aumentei um pouco para dar mais respiro */
+            max-width: 1000px; 
             width: 100%; 
             display: grid; 
             grid-template-columns: 1fr 1fr; 
             gap: 30px; 
             margin-top: 30px; 
-            flex: 1; 
         }
 
         .card { 
             background: #ffffff; 
-            padding: 35px; 
-            border-radius: 20px; /* Bordas mais arredondadas são tendência em UI moderna */
-            /* Sombra mais suave e espalhada para um look premium */
+            padding: 30px; 
+            border-radius: 20px; 
             box-shadow: 0 10px 25px rgba(0,0,0,0.05); 
-            border: 1px solid rgba(255, 255, 255, 0.3);
             height: fit-content; 
-            transition: transform 0.3s ease;
-        }
-
-        /* Efeito sutil ao passar o mouse para indicar interatividade */
-        .card:hover {
-            transform: translateY(-5px);
         }
         
-        h2 { color: #ee4d2d; margin-top: 0; border-bottom: 2px solid #fff5f2; padding-bottom: 10px; font-size: 1.2rem; }
+        h2 { color: #ee4d2d; margin-top: 0; font-size: 1.2rem; border-bottom: 2px solid #fff5f2; padding-bottom: 10px; }
         label { display: block; margin-top: 15px; font-weight: bold; font-size: 13px; color: #555; }
-        input, textarea, select { width: 100%; padding: 12px; margin-top: 5px; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; font-size: 15px; }
+        input, textarea, select { width: 100%; padding: 12px; margin-top: 5px; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; }
         
-        /* ESTILO DO CARD QUE VIRA FOTO */
         #cardParaFoto { 
             width: 320px; 
             background: white; 
-            border: 3px solid #ee4d2d; /* Cor padrão inicial Shopee */
+            border: 3px solid #ee4d2d; 
             border-radius: 16px; 
             overflow: hidden; 
             text-align: center;
             padding-bottom: 20px;
-            box-shadow: 0 6px 20px rgba(0,0,0,0.1);
         }
-        .img-container { width: 100%; height: 300px; overflow: hidden; background: #fafafa; display: flex; align-items: center; justify-content: center; }
+        .img-container { width: 100%; height: 300px; background: #fafafa; display: flex; align-items: center; justify-content: center; }
         .img-container img { max-width: 100%; max-height: 100%; object-fit: contain; }
-        .titulo-prod { font-weight: bold; font-size: 19px; color: #333; padding: 15px 20px; display: block; line-height: 1.3; }
+        .titulo-prod { font-weight: bold; font-size: 18px; color: #333; padding: 15px 20px; display: block; }
         
-        /* BOTÃO DENTRO DO CARD (O QUE VIRA FOTO) */
-        #btnFake { background: #ee4d2d; color: white; padding: 13px 25px; margin: 0 20px; border-radius: 8px; font-weight: bold; font-size: 15px; text-transform: uppercase; }
+        #btnFake { background: #ee4d2d; color: white; padding: 12px; margin: 0 20px; border-radius: 8px; font-weight: bold; }
 
-        /* BOTÕES DE AÇÃO NA PÁGINA */
-        .btn-acao { width: 100%; padding: 15px; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 16px; margin-top: 15px; transition: 0.3s; display: flex; align-items: center; justify-content: center; gap: 10px; }
-        .download { background: #1a73e8; color: white; }
-        .copy-link { background: #25D366; color: white; }
-        
-        .info-section { max-width: 900px; width: 100%; margin-top: 30px; }
-        .ad-container { width: 100%; text-align: center; margin-bottom: 20px; min-height: 60px; }
-        .instructions { background: #fff; padding: 20px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+        .btn-acao { width: 100%; padding: 15px; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; margin-top: 10px; color: white; transition: 0.3s; }
+        .download { background: #1a73e8; }
+        .copy-link { background: #25D366; }
+        .btn-acao:hover { opacity: 0.9; transform: scale(1.02); }
 
-        footer { margin-top: 50px; width: 100%; max-width: 900px; text-align: center; padding: 20px 0; border-top: 1px solid #ddd; font-size: 14px; color: #666; }
-        .footer-links { margin-bottom: 10px; }
-        .footer-links a { color: #ee4d2d; text-decoration: none; margin: 0 10px; font-weight: 500; }
-        .footer-links a:hover { text-decoration: underline; }
+        /* SEÇÃO DE INSTRUÇÕES */
+        .info-section { max-width: 1000px; width: 100%; margin-top: 30px; }
+        .instructions { background: #fff; padding: 25px; border-radius: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border-left: 5px solid #ee4d2d; }
+        .instructions h3 { margin-top: 0; color: #333; }
+        .instructions ul { padding-left: 20px; color: #555; line-height: 1.6; }
 
-        /* AJUSTES CELULAR */
+        /* CONTAINER DE ANÚNCIOS ESTILO FIXO */
+        #ad-footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            border-top: 2px solid #ee4d2d;
+            padding: 10px 0;
+            box-shadow: 0 -5px 15px rgba(0,0,0,0.1);
+        }
+
+        .ad-row {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            min-height: 55px;
+        }
+
         @media (max-width: 750px) { 
             .main-container { grid-template-columns: 1fr; } 
-            #cardParaFoto { width: 100%; max-width: 320px; }
-            h1 { font-size: 1.5rem; }
+            .info-section { margin-top: 20px; }
         }
     </style>
 </head>
@@ -96,22 +102,18 @@
     <div class="main-container">
         <div class="card">
             <h2>1. Configurar Oferta</h2>
-            
             <label>Selecione a Loja:</label>
             <select id="lojaSelect" onchange="atualizar()">
-                <option value="shopee" selected>Shopee</option>
+                <option value="shopee">Shopee</option>
                 <option value="mercadolivre">Mercado Livre</option>
                 <option value="amazon">Amazon</option>
             </select>
-
             <label>Link da Foto (URL):</label>
-            <input type="text" id="imgUrl" placeholder="Cole o link da imagem" oninput="atualizar()">
-            
-            <label>Título / Preço:</label>
-            <textarea id="nome" rows="2" placeholder="Ex: Fone Bluetooth - De R$ 199 por R$ 89 🔥" oninput="atualizar()"></textarea>
-            
+            <input type="text" id="imgUrl" placeholder="Cole o link da imagem aqui" oninput="atualizar()">
+            <label>Título e Preço:</label>
+            <textarea id="nome" rows="2" placeholder="Ex: Fone Bluetooth - R$ 89,90 🔥" oninput="atualizar()"></textarea>
             <label>Seu Link de Afiliado:</label>
-            <input type="text" id="linkAfiliado" placeholder="https://..." oninput="atualizar()">
+            <input type="text" id="linkAfiliado" placeholder="https://shope.ee/..." oninput="atualizar()">
         </div>
 
         <div class="card" style="display: flex; flex-direction: column; align-items: center;">
@@ -121,123 +123,118 @@
                     <img id="pImg" src="https://via.placeholder.com/320x300?text=Sua+Imagem+Aqui">
                 </div>
                 <span id="pNome" class="titulo-prod">Título do Produto</span>
-                <div id="btnFake">VER OFERTA NA SHOPEE</div>
+                <div id="btnFake">VER OFERTA</div>
             </div>
-
             <div style="width: 100%; max-width: 320px;">
                 <button class="btn-acao download" onclick="baixarFoto()">💾 BAIXAR FOTO DO CARD</button>
-                <button class="btn-acao copy-link" onclick="copiarTextoWhatsApp()">🔗 COPIAR TEXTO + LINK</button>
+                <button class="btn-acao copy-link" onclick="copiarTexto()">🔗 COPIAR TEXTO + LINK</button>
             </div>
         </div>
     </div>
 
     <div class="info-section">
-        <div class="ad-container" id="ad-refresh-container">
-            </div>
-
         <div class="instructions">
-            <h3>Como usar o Gerador de Ofertas?</h3>
+            <h3>📖 Como usar o Gerador?</h3>
             <ul>
-                <li><strong>Passo 1:</strong> Selecione a loja (Shopee, Mercado Livre ou Amazon) para ajustar as cores.</li>
-                <li><strong>Passo 2:</strong> Cole a URL da imagem e preencha os dados da oferta.</li>
-                <li><strong>Passo 3:</strong> Baixe a foto do card clicando no botão azul.</li>
-                <li><strong>Passo 4:</strong> Copie o texto e poste junto com a imagem no seu grupo!</li>
+                <li><strong>Escolha a Loja:</strong> Isso mudará automaticamente a cor do card e o texto do botão (Shopee, Amazon ou Mercado Livre).</li>
+                <li><strong>Imagem:</strong> Cole o link de uma imagem do produto. O card irá atualizar em tempo real.</li>
+                <li><strong>Título:</strong> Escreva o nome do produto e o preço. Use emojis para chamar mais atenção!</li>
+                <li><strong>Link:</strong> Insira o seu link de afiliado personalizado.</li>
+                <li><strong>Download:</strong> Clique no botão azul para salvar a imagem pronta para postar no Instagram ou WhatsApp.</li>
+                <li><strong>Texto:</strong> Use o botão verde para copiar a legenda já formatada com seu link.</li>
             </ul>
         </div>
     </div>
 
-    <footer>
-        <div class="footer-links">
-            <a href="index.html">Início</a>
-            <a href="privacidade.html">Política de Privacidade</a>
-            <a href="termos.html">Termos de Uso</a>
-            <a href="contato.html">Contato</a>
-        </div>
-        <p>&copy; 2026 Achados Tech - Ferramenta Gratuita para Afiliados.</p>
-    </footer>
+    <div id="ad-footer"></div>
 
     <script>
-        /* FUNÇÃO PARA ATUALIZAR O ANÚNCIO A CADA 30 SEGUNDOS */
-        function carregarAnuncio() {
-            const container = document.getElementById('ad-refresh-container');
-            container.innerHTML = '';
+        // --- LÓGICA DE ANÚNCIOS DINÂMICOS (Refresh de 30s) ---
+        function refreshAds() {
+            const adContainer = document.getElementById('ad-footer');
+            adContainer.innerHTML = ''; 
 
-            var atOptions = {
-                'key' : '5069ad86b9e8e9fde3e56a361568f7fd',
-                'format' : 'iframe',
-                'height' : 50,
-                'width' : 320,
-                'params' : {}
-            };
-
-            var optionsScript = document.createElement('script');
-            optionsScript.type = 'text/javascript';
-            optionsScript.text = "atOptions = " + JSON.stringify(atOptions);
+            const row1 = document.createElement('div');
+            row1.className = 'ad-row';
+            const row2 = document.createElement('div');
+            row2.className = 'ad-row';
             
-            var invokeScript = document.createElement('script');
-            invokeScript.type = 'text/javascript';
-            invokeScript.src = "https://www.highperformanceformat.com/5069ad86b9e8e9fde3e56a361568f7fd/invoke.js";
+            adContainer.appendChild(row1);
+            adContainer.appendChild(row2);
 
-            container.appendChild(optionsScript);
-            container.appendChild(invokeScript);
+            // Anúncio 1: Adsterra
+            const scriptConfig1 = document.createElement('script');
+            scriptConfig1.text = `atOptions = { 'key' : '5069ad86b9e8e9fde3e56a361568f7fd', 'format' : 'iframe', 'height' : 50, 'width' : 320, 'params' : {} };`;
+            const scriptInvoke1 = document.createElement('script');
+            scriptInvoke1.src = 'https://www.highperformanceformat.com/5069ad86b9e8e9fde3e56a361568f7fd/invoke.js';
+            
+            row1.appendChild(scriptConfig1);
+            row1.appendChild(scriptInvoke1);
+
+            // Anúncio 2: Surfe.pro
+            const scriptSurfeJS = document.createElement('script');
+            scriptSurfeJS.src = '//static.surfe.pro/js/net.js';
+            const insSurfe = document.createElement('ins');
+            insSurfe.className = 'surfe-be';
+            insSurfe.setAttribute('data-sid', '420510');
+            const scriptSurfePush = document.createElement('script');
+            scriptSurfePush.text = `(adsurfebe = window.adsurfebe || []).push({});`;
+
+            row2.appendChild(scriptSurfeJS);
+            row2.appendChild(insSurfe);
+            row2.appendChild(scriptSurfePush);
         }
 
-        // Inicia o primeiro anúncio e define o intervalo de 60 segundos
-        carregarAnuncio();
-        setInterval(carregarAnuncio, 60000);
+        refreshAds();
+        setInterval(refreshAds, 30000);
 
-        /* FUNÇÕES ORIGINAIS DO GERADOR */
+        // --- LÓGICA DO GERADOR ---
         function atualizar() {
             const img = document.getElementById('imgUrl').value;
             const nome = document.getElementById('nome').value;
             const loja = document.getElementById('lojaSelect').value;
             
-            const pImg = document.getElementById('pImg');
-            const pNome = document.getElementById('pNome');
-            const btnFake = document.getElementById('btnFake');
+            if(img) document.getElementById('pImg').src = img;
+            document.getElementById('pNome').innerText = nome || "Título do Produto";
+
+            const config = {
+                shopee: { color: "#ee4d2d", text: "VER OFERTA NA SHOPEE" },
+                mercadolivre: { color: "#ffe600", text: "VER NO MERCADO LIVRE" },
+                amazon: { color: "#232f3e", text: "VER OFERTA NA AMAZON" }
+            };
+
+            const sel = config[loja];
             const card = document.getElementById('cardParaFoto');
+            const btn = document.getElementById('btnFake');
+            const footerAd = document.getElementById('ad-footer');
 
-            if(img) pImg.src = img;
-            pNome.innerText = nome || "Título do Produto";
-
-            if (loja === "shopee") {
-                card.style.borderColor = "#ee4d2d";
-                btnFake.style.backgroundColor = "#ee4d2d";
-                btnFake.style.color = "white";
-                btnFake.innerText = "VER OFERTA NA SHOPEE";
-            } else if (loja === "mercadolivre") {
-                card.style.borderColor = "#ffe600";
-                btnFake.style.backgroundColor = "#ffe600";
-                btnFake.style.color = "#333";
-                btnFake.innerText = "VER NO MERCADO LIVRE";
-            } else if (loja === "amazon") {
-                card.style.borderColor = "#232f3e";
-                btnFake.style.backgroundColor = "#232f3e";
-                btnFake.style.color = "white";
-                btnFake.innerText = "VER OFERTA NA AMAZON";
-            }
+            card.style.borderColor = sel.color;
+            btn.style.backgroundColor = sel.color;
+            btn.innerText = sel.text;
+            btn.style.color = loja === 'mercadolivre' ? '#333' : 'white';
+            
+            // Sincroniza a borda do anúncio com a cor da loja selecionada
+            footerAd.style.borderColor = sel.color;
         }
 
         function baixarFoto() {
             const card = document.getElementById('cardParaFoto');
             html2canvas(card, { useCORS: true, scale: 2 }).then(canvas => {
                 const link = document.createElement('a');
-                link.download = 'oferta-achados-tech.png';
-                link.href = canvas.toDataURL('image/png');
+                link.download = 'oferta-tech.png';
+                link.href = canvas.toDataURL();
                 link.click();
             });
         }
 
-        function copiarTextoWhatsApp() {
+        function copiarTexto() {
             const nome = document.getElementById('nome').value;
             const link = document.getElementById('linkAfiliado').value;
-            if(!link) { alert("Coloque seu link de afiliado!"); return; }
-            const textoFinal = `🔥 *${nome.toUpperCase()}* \n\n✅ Confira aqui: \n👉 ${link}`;
-            navigator.clipboard.writeText(textoFinal).then(() => {
-                alert("Texto copiado! Poste a foto e cole na legenda.");
-            });
+            if(!link) { alert("Insira o seu link de afiliado!"); return; }
+            const texto = `🔥 *${nome.toUpperCase()}* \n\n✅ Confira aqui: \n👉 ${link}`;
+            navigator.clipboard.writeText(texto).then(() => alert("Texto copiado com sucesso!"));
         }
-        
+
         atualizar();
     </script>
 </body>
